@@ -43,13 +43,18 @@ function renderList(items) {
     list.innerHTML = "";
     items.forEach(todo => {
         const li = document.createElement('li');
-        li.innerHTML = `
-  <span>${todo.text} - <span class="text-sm text-gray-500">${todo.date}</span></span>
-  <div style="display: flex; gap: 5px;">
-    <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
-    <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
-  </div>
-`;
+        li.className = `flex justify-between items-center ${todo.done ? 'bg-green-200' : 'bg-gray-100'} px-4 py-2 rounded-md`;
+
+    li.innerHTML = `
+      <span style="flex:1; ${todo.done ? 'text-decoration: line-through; opacity: 0.6;' : ''}">
+        ${todo.text} - <span class="text-sm text-gray-500">${todo.date}</span>
+      </span>
+      <div style="display: flex; gap: 5px;">
+        ${!todo.done ? `<button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>` : ""}
+        <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
+        <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
+      </div>
+    `;
 
         list.appendChild(li);
     });
@@ -86,12 +91,27 @@ filter.addEventListener('change', function () {
 });
 
 function startEdit(id) {
+    const todo = todos.find(t => t.id === id);
+    if (!todo) return;
+
+    input.value = todo.text;
+    date.value = todo.date;
+    editingId = id;
+
+    form.querySelector('button').textContent = "Update";
+}
+
+const todo = {
+    id: Date.now(),
+    text,
+    date: dateVal,
+    done: false
+};
+
+function toggleDone(id) {
   const todo = todos.find(t => t.id === id);
   if (!todo) return;
 
-  input.value = todo.text;
-  date.value = todo.date;
-  editingId = id;
-
-  form.querySelector('button').textContent = "Update";
+  todo.done = !todo.done;
+  renderList(todos);
 }
