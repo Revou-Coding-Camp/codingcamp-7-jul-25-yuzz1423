@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: #f4f4f4;
   padding: 40px 20px;
 }
@@ -31,15 +31,17 @@ form input[type="date"] {
   flex-shrink: 0;
 }
 
-/* --- FILTER DROPDOWN --- */
+/* --- FILTER --- */
 .filter {
   margin-bottom: 20px;
 }
 
 /* --- JUDUL --- */
 h1 {
-  font-size: 1.8rem;
-  margin-bottom: 25px;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #8e44ad;
+  text-align: center;
 }
 
 h2 {
@@ -77,94 +79,71 @@ h2 {
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: #f2f2f2;
+  background-color: #f3e6ff;
 }
 
 th, td {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   padding: 12px 10px;
-  text-align: left;
   vertical-align: middle;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-td button {
-  margin-right: 6px;
-  padding: 6px 10px;
-  font-size: 0.85rem;
+/* center judul */
+#todo-table thead th {
+  text-align: center;
 }
 
-/* --- TOMBOL HAPUS SEMUA --- */
-.clear-btn {
-  background-color: red;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-  font-weight: bold;
+/* hover row */
+#todo-table tbody tr:hover {
+  background-color: #f7f0ff;
+  transition: background 0.2s ease-in-out;
 }
 
-.clear-btn:hover {
-  background-color: darkred;
-}
-
-/* --- SCROLLBAR CORNER FIX --- */
-.table-wrapper::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* Responsive tweaks */
-@media (max-width: 500px) {
-  .container {
-    padding: 20px;
-  }
-}
-
-td .action-buttons {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 6px;
-}
-
-/* --- ATUR LEBAR KOLOM TABEL --- */
+/* --- WIDTH KOLOM --- */
 #todo-table th:nth-child(1),
 #todo-table td:nth-child(1) {
-  width: 30%; /* kolom tugas */
+  width: 25%;
+  text-align: left;
 }
 
 #todo-table th:nth-child(2),
 #todo-table td:nth-child(2) {
-  width: 20%; /* Tanggal */
+  width: 20%;
   text-align: center;
 }
 
 #todo-table th:nth-child(3),
 #todo-table td:nth-child(3) {
-  width: 20%; /* Status */
+  width: 25%;
   text-align: center;
 }
 
 #todo-table th:nth-child(4),
 #todo-table td:nth-child(4) {
-  width: 30%; /* kolom aksi diperluas */
+  width: 30%;
   text-align: center;
 }
 
-/* --- CENTER TEXT JUDUL TABEL --- */
-#todo-table thead th {
-  text-align: center;
+/* --- STATUS DONE DIGELAPIN --- */
+.status-done {
+  color: #555;
+  font-weight: bold;
+  background-color: #eee;
+  padding: 4px 8px;
+  border-radius: 6px;
 }
 
+/* --- ACTION BUTTONS --- */
 td .action-buttons {
   display: flex;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
   flex-wrap: nowrap;
 }
+
+/* --- SCROLLBAR --- */
 .table-wrapper::-webkit-scrollbar {
   width: 8px;
 }
@@ -181,4 +160,107 @@ td .action-buttons {
 
 .table-wrapper::-webkit-scrollbar-thumb:hover {
   background: #999;
+}
+
+/* --- BUTTON STYLE UMUM --- */
+button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* tombol add / update */
+#submit-btn {
+  background-color: #8e44ad;
+}
+#submit-btn:hover {
+  background-color: #732d91;
+}
+
+/* tombol batal */
+#cancel-btn {
+  background-color: #aaa;
+}
+#cancel-btn:hover {
+  background-color: #888;
+}
+
+/* tombol done */
+.text-green-600 {
+  background-color: #2ecc71;
+}
+.text-green-600:hover {
+  background-color: #27ae60;
+}
+
+/* tombol edit */
+.text-blue-500 {
+  background-color: #f1c40f;
+  color: #000;
+}
+.text-blue-500:hover {
+  background-color: #f39c12;
+  color: #000;
+}
+
+/* tombol delete */
+.text-red-500 {
+  background-color: #e74c3c;
+}
+.text-red-500:hover {
+  background-color: #c0392b;
+}
+
+/* tombol hapus semua */
+.clear-btn {
+  background-color: #8e44ad;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  font-weight: bold;
+}
+.clear-btn:hover {
+  background-color: #732d91;
+}
+
+/* --- MODE EDIT HIGHLIGHT --- */
+.editing-row {
+  background-color: #fae5ff !important;
+}
+
+/* --- DROPDOWN FILTER STYLING --- */
+.filter label {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #5e2b8c;
+}
+
+#filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#filter-select:hover {
+  border-color: #8e44ad;
+}
+
+#filter-select:focus {
+  outline: none;
+  border-color: #8e44ad;
+  box-shadow: 0 0 5px rgba(142, 68, 173, 0.4);
 }

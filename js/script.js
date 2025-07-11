@@ -48,37 +48,42 @@ form.addEventListener('submit', function (e) {
 
 function renderList(items) {
     list.innerHTML = "";
-    // pisahkan yang done dan not-done
+
     const notDone = items.filter(t => !t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
     const done = items.filter(t => t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    // gabungkan ulang: not-done dulu, baru done
     const sortedItems = [...notDone, ...done];
 
     sortedItems.forEach(todo => {
         const tr = document.createElement('tr');
-        const statusText = todo.done ? "Sudah Selesai" : "Belum Selesai";
 
-        let actionButtons = `
-  <div class="action-buttons">
-    ${todo.done
-                ? `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`
-                : `
-        <button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>
-        <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
-      `
-            }
-    <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
-  </div>
-`;
+        // ⬇️ tambahin highlight untuk row yg lagi diedit
+        if (todo.id === editingId) {
+            tr.classList.add("editing-row");
+        }
 
+        // ⬇️ status pakai span + class buat style
+        const statusText = todo.done
+            ? `<span class="status-done">Sudah Selesai</span>`
+            : "Belum Selesai";
+
+        const actionButtons = `
+            <div class="action-buttons">
+                ${todo.done
+                    ? `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`
+                    : `
+                        <button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>
+                        <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
+                    `}
+                <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
+            </div>
+        `;
 
         tr.innerHTML = `
-      <td>${todo.text}</td>
-      <td>${todo.date}</td>
-      <td>${statusText}</td>
-      <td>${actionButtons}</td>
-    `;
+            <td>${todo.text}</td>
+            <td>${todo.date}</td>
+            <td>${statusText}</td>
+            <td>${actionButtons}</td>
+        `;
 
         list.appendChild(tr);
     });

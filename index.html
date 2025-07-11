@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My To-Do List</title>
     <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
         </form>
 
         <div class="filter">
-            <label>Filter: </label>
+            <label for="filter-select">Filter: </label>
             <select id="filter-select">
                 <option value="all">All</option>
                 <option value="done">Sudah Selesai</option>
@@ -31,17 +32,17 @@
 
         <h2 style="margin-bottom: 10px;">My Tasks:</h2>
         <div class="table-wrapper">
-        <table id="todo-table">
-            <thead>
-                <tr>
-                    <th>Tugas</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="todo-list"></tbody>
-        </table>
+            <table id="todo-table">
+                <thead>
+                    <tr>
+                        <th>Tugas</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="todo-list"></tbody>
+            </table>
         </div>
         <button id="clear-btn" class="clear-btn">Hapus Semua Tasks</button>
     </div>
