@@ -48,26 +48,33 @@ form.addEventListener('submit', function (e) {
 
 function renderList(items) {
     list.innerHTML = "";
-    items.sort((a, b) => new Date(a.date) - new Date(b.date));
-    items.forEach(todo => {
+    // pisahkan yang done dan not-done
+    const notDone = items.filter(t => !t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
+    const done = items.filter(t => t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // gabungkan ulang: not-done dulu, baru done
+    const sortedItems = [...notDone, ...done];
+
+    sortedItems.forEach(todo => {
         const tr = document.createElement('tr');
         const statusText = todo.done ? "Sudah Selesai" : "Belum Selesai";
 
-        let actionButtons = "";
+        let actionButtons = `
+  <div class="action-buttons">
+    ${todo.done
+                ? `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`
+                : `
+        <button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>
+        <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
+      `
+            }
+    <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
+  </div>
+`;
 
-        if (todo.done) {
-            // Jika sudah selesai
-            actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`;
-        } else {
-            // Jika belum selesai
-            actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>`;
-            actionButtons += `<button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>`;
-        }
-
-        actionButtons += `<button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>`;
 
         tr.innerHTML = `
-      <td style="${todo.done ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${todo.text}</td>
+      <td>${todo.text}</td>
       <td>${todo.date}</td>
       <td>${statusText}</td>
       <td>${actionButtons}</td>
@@ -137,9 +144,9 @@ cancelBtn.addEventListener('click', function () {
 });
 
 clearBtn.addEventListener('click', function () {
-  const confirmClear = confirm("Yakin mau hapus semua tasks?");
-  if (confirmClear) {
-    todos = [];
-    renderList(todos);
-  }
+    const confirmClear = confirm("Yakin mau hapus semua tasks?");
+    if (confirmClear) {
+        todos = [];
+        renderList(todos);
+    }
 });
