@@ -3,6 +3,10 @@ const input = document.getElementById('todo-input');
 const date = document.getElementById('todo-date');
 const list = document.getElementById('todo-list');
 const filter = document.getElementById('filter-select');
+const submitBtn = document.getElementById('submit-btn');
+const cancelBtn = document.getElementById('cancel-btn');
+const clearBtn = document.getElementById('clear-btn');
+
 
 let todos = [];
 let editingId = null;
@@ -23,13 +27,15 @@ form.addEventListener('submit', function (e) {
             todos[index].date = dateVal;
         }
         editingId = null;
-        form.querySelector('button').textContent = "Add";
+        submitBtn.textContent = "Add";
+        cancelBtn.style.display = "none";
     } else {
         // MODE TAMBAH
         const todo = {
             id: Date.now(),
             text,
             date: dateVal,
+            done: false
         };
         todos.push(todo);
     }
@@ -39,6 +45,7 @@ form.addEventListener('submit', function (e) {
     renderList(todos);
 });
 
+
 function renderList(items) {
     list.innerHTML = "";
     items.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -47,12 +54,16 @@ function renderList(items) {
         const statusText = todo.done ? "Sudah Selesai" : "Belum Selesai";
 
         let actionButtons = "";
-        if (!todo.done) {
+
+        if (todo.done) {
+            // Jika sudah selesai
+            actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`;
+        } else {
+            // Jika belum selesai
             actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>`;
             actionButtons += `<button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>`;
-        } else {
-            actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`;
         }
+
         actionButtons += `<button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>`;
 
         tr.innerHTML = `
@@ -86,15 +97,15 @@ function editTodo(id) {
 }
 
 filter.addEventListener('change', function () {
-    const now = new Date().toISOString().slice(0, 10);
-    if (this.value === 'today') {
-        renderList(todos.filter(t => t.date === now));
-    } else if (this.value === 'upcoming') {
-        renderList(todos.filter(t => t.date > now));
+    if (this.value === 'done') {
+        renderList(todos.filter(t => t.done));
+    } else if (this.value === 'not-done') {
+        renderList(todos.filter(t => !t.done));
     } else {
         renderList(todos);
     }
 });
+
 
 function startEdit(id) {
     const todo = todos.find(t => t.id === id);
@@ -104,15 +115,10 @@ function startEdit(id) {
     date.value = todo.date;
     editingId = id;
 
-    form.querySelector('button').textContent = "Update";
+    submitBtn.textContent = "Update";
+    cancelBtn.style.display = "inline";
 }
 
-const todo = {
-    id: Date.now(),
-    text,
-    date: dateVal,
-    done: false
-};
 
 function toggleDone(id) {
     const todo = todos.find(t => t.id === id);
@@ -121,3 +127,19 @@ function toggleDone(id) {
     todo.done = !todo.done;
     renderList(todos);
 }
+
+cancelBtn.addEventListener('click', function () {
+    editingId = null;
+    input.value = "";
+    date.value = "";
+    submitBtn.textContent = "Add";
+    cancelBtn.style.display = "none";
+});
+
+clearBtn.addEventListener('click', function () {
+  const confirmClear = confirm("Yakin mau hapus semua tasks?");
+  if (confirmClear) {
+    todos = [];
+    renderList(todos);
+  }
+});
