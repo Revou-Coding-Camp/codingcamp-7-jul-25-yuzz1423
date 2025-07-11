@@ -1,9 +1,8 @@
+/* FONT */
 body {
   font-family: 'Poppins', sans-serif;
   background: #f4f4f4;
   padding: 40px 20px;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
 }
 
 .container {
@@ -15,7 +14,27 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* --- FORM AREA --- */
+/* JUDUL */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #8e44ad;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* DARK MODE h2 jadi terang */
+body.dark-mode h2 {
+  color: #f2f2f2;
+}
+
+/* FORM */
 form {
   display: flex;
   flex-wrap: wrap;
@@ -28,15 +47,11 @@ form input[type="date"] {
   flex: 1 1 200px;
 }
 
-#submit-btn,
-#cancel-btn {
-  flex-shrink: 0;
-}
-
-/* --- FILTER --- */
+/* FILTER */
 .filter {
   margin-bottom: 20px;
 }
+
 .filter label {
   font-weight: 600;
   margin-right: 8px;
@@ -64,109 +79,86 @@ form input[type="date"] {
   box-shadow: 0 0 5px rgba(142, 68, 173, 0.4);
 }
 
-/* --- JUDUL --- */
-h1 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  color: #8e44ad;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-/* --- TABEL AREA --- */
+/* WRAPPER TABEL */
 .table-wrapper {
-  max-height: 220px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 2px solid #8e44ad;
+  border-radius: 6px;
+  overflow: hidden;
   margin-bottom: 25px;
 }
 
+/* HEADER TABEL */
 #todo-table {
+  width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  width: 100%;
-  table-layout: fixed;
 }
 
-#todo-table thead,
-#todo-table tbody,
-#todo-table thead tr,
-#todo-table tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-#todo-table thead {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: #f3e6ff;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 12px 10px;
-  vertical-align: middle;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* center judul */
-#todo-table thead th {
-  text-align: center;
-  font-weight: 600;
+#todo-table th {
   background-color: #f3e6ff;
   color: #5e2b8c;
+  padding: 12px 10px;
+  text-align: center;
+  font-weight: bold;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
-/* hover row */
-#todo-table tbody tr:hover {
+/* SCROLL BODY (HANYA VERTIKAL) */
+.scroll-body {
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden; /* ⬅️ ini kunci biar gak bisa scroll ke samping */
+}
+
+/* ISI TABEL */
+#todo-table-body {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+#todo-table-body td {
+  padding: 12px 10px;
+  background-color: white;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal; /* ⬅️ biar teks nggak bikin tabel melebar */
+}
+
+#todo-table-body tr:hover {
   background-color: #f7f0ff;
-  transition: background 0.2s ease-in-out;
 }
 
-/* --- WIDTH KOLOM --- */
+/* LEBAR KOLOM */
 #todo-table th:nth-child(1),
-#todo-table td:nth-child(1) {
-  width: 25%;
+#todo-table-body td:nth-child(1) {
+  width: 30%; /* Tugas */
   text-align: left;
 }
 
 #todo-table th:nth-child(2),
-#todo-table td:nth-child(2) {
-  width: 20%;
+#todo-table-body td:nth-child(2) {
+  width: 20%; /* Tanggal */
   text-align: center;
 }
 
 #todo-table th:nth-child(3),
-#todo-table td:nth-child(3) {
-  width: 25%;
+#todo-table-body td:nth-child(3) {
+  width: 25%; /* Status */
   text-align: center;
 }
 
 #todo-table th:nth-child(4),
-#todo-table td:nth-child(4) {
-  width: 30%;
+#todo-table-body td:nth-child(4) {
+  width: 28%; /* Aksi */
   text-align: center;
 }
 
-/* --- STATUS DONE DIGELAPIN --- */
-.status-done {
-  color: #555;
-  font-weight: bold;
-  background-color: #eee;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
 
-/* --- ACTION BUTTONS --- */
+/* ACTION BUTTONS */
 td .action-buttons {
   display: flex;
   justify-content: center;
@@ -174,35 +166,36 @@ td .action-buttons {
   flex-wrap: nowrap;
 }
 
-/* --- SCROLLBAR --- */
+/* STATUS DONE */
+.status-done {
+  color: #555;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* EDIT MODE HIGHLIGHT */
+.editing-row {
+  background-color: #fae5ff !important;
+}
+
+/* SCROLLBAR */
 .table-wrapper::-webkit-scrollbar {
   width: 8px;
 }
-
 .table-wrapper::-webkit-scrollbar-track {
   background: #eee;
   border-radius: 10px;
 }
-
 .table-wrapper::-webkit-scrollbar-thumb {
   background: #bbb;
   border-radius: 10px;
 }
-
 .table-wrapper::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
 
-/* --- BUTTON STYLE UMUM --- */
-button,
-input,
-select,
-.clear-btn,
-#submit-btn,
-#cancel-btn {
-  transition: all 0.25s ease;
-}
-
+/* BUTTONS */
 button {
   padding: 6px 10px;
   border: none;
@@ -210,10 +203,10 @@ button {
   font-size: 0.85rem;
   cursor: pointer;
   color: #fff;
+  transition: background-color 0.2s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* tombol add / update */
 #submit-btn {
   background-color: #8e44ad;
 }
@@ -221,7 +214,6 @@ button {
   background-color: #732d91;
 }
 
-/* tombol batal */
 #cancel-btn {
   background-color: #aaa;
 }
@@ -229,7 +221,6 @@ button {
   background-color: #888;
 }
 
-/* tombol done */
 .text-green-600 {
   background-color: #2ecc71;
 }
@@ -237,7 +228,6 @@ button {
   background-color: #27ae60;
 }
 
-/* tombol edit */
 .text-blue-500 {
   background-color: #f1c40f;
   color: #000;
@@ -247,7 +237,6 @@ button {
   color: #000;
 }
 
-/* tombol delete */
 .text-red-500 {
   background-color: #e74c3c;
 }
@@ -255,7 +244,16 @@ button {
   background-color: #c0392b;
 }
 
-/* tombol hapus semua */
+/* tombol batal di kolom aksi */
+.text-yellow-500 {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+.text-yellow-500:hover {
+  background-color: #95a5a6;
+}
+
+/* CLEAR SEMUA */
 .clear-btn {
   background-color: #8e44ad;
   color: #fff;
@@ -271,13 +269,26 @@ button {
   background-color: #732d91;
 }
 
-/* --- MODE EDIT HIGHLIGHT --- */
-.editing-row {
-  background-color: #fae5ff !important;
-  border-left: 5px solid #8e44ad;
+.scroll-body::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* --- DARK MODE TOGGLE BUTTON --- */
+.scroll-body::-webkit-scrollbar-track {
+  background: #eee;
+  border-radius: 10px;
+}
+
+.scroll-body::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 10px;
+}
+
+.scroll-body::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+
+/* DARK MODE TOGGLE BUTTON */
 .mode-toggle {
   position: fixed;
   top: 20px;
@@ -291,9 +302,21 @@ button {
   cursor: pointer;
   z-index: 999;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
 }
 .mode-toggle:hover {
   background-color: #732d91;
+}
+
+#todo-table th,
+#todo-table td {
+  border: none;
+}
+
+#todo-table {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 /* === DARK MODE === */
@@ -307,6 +330,27 @@ body.dark-mode .container {
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
 }
 
+body.dark-mode h1 {
+  color: #d8b4f8;
+}
+
+body.dark-mode h2 {
+  color: #f2f2f2;
+}
+
+body.dark-mode #todo-table thead th {
+  background-color: #3b3b50;
+  color: #d5bfff;
+}
+
+body.dark-mode #todo-table td {
+  background-color: #2a2a3d;
+}
+
+body.dark-mode #todo-table tbody tr:hover {
+  background-color: #3a304e;
+}
+
 body.dark-mode input,
 body.dark-mode select {
   background-color: #3a3a4d;
@@ -316,23 +360,6 @@ body.dark-mode select {
 
 body.dark-mode input::placeholder {
   color: #aaa;
-}
-
-body.dark-mode table,
-body.dark-mode th,
-body.dark-mode td {
-  background-color: #2a2a3d;
-  color: #eee;
-  border-color: #444;
-}
-
-body.dark-mode #todo-table thead {
-  background-color: #3b2d56;
-  color: #d4bfff;
-}
-
-body.dark-mode #todo-table tbody tr:hover {
-  background-color: #35304c;
 }
 
 body.dark-mode .clear-btn {
@@ -365,11 +392,9 @@ body.dark-mode .text-green-600:hover {
 
 body.dark-mode .text-blue-500 {
   background-color: #f1c40f;
-  color: #000;
 }
 body.dark-mode .text-blue-500:hover {
   background-color: #f39c12;
-  color: #000;
 }
 
 body.dark-mode .text-red-500 {
@@ -379,12 +404,29 @@ body.dark-mode .text-red-500:hover {
   background-color: #c0392b;
 }
 
-body.dark-mode .editing-row {
-  background-color: #442c5c !important;
-  border-left: 5px solid #b97fff;
+body.dark-mode .text-yellow-500 {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+body.dark-mode .text-yellow-500:hover {
+  background-color: #95a5a6;
 }
 
-body.dark-mode .filter label {
+body.dark-mode #todo-table thead th {
+  background-color: #3b2d56;
+  color: #e0d3ff;
+}
+
+body.dark-mode #todo-table td {
+  background-color: #2a2a3d;
+  color: #eee;
+}
+
+body.dark-mode #todo-table {
+  border: 1px solid #555;
+}
+
+body.dark-mode h1 {
   color: #d4bfff;
 }
 
@@ -393,6 +435,38 @@ body.dark-mode #filter-select {
   border-color: #6c568a;
   color: #fff;
 }
+
+body.dark-mode #filter-select option {
+  background-color: #3f3556;
+  color: #fff;
+}
+
 body.dark-mode #filter-select:hover {
   border-color: #9b59b6;
+}
+
+body.dark-mode #filter-select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(155, 89, 182, 0.4);
+}
+
+body.dark-mode #todo-table-body td {
+  background-color: #2a2a3d;
+  color: #eee;
+}
+
+body.dark-mode #todo-table-body tr:hover {
+  background-color: #3a304e;
+}
+
+body.dark-mode .scroll-body::-webkit-scrollbar-track {
+  background: #333;
+}
+
+body.dark-mode .scroll-body::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+body.dark-mode .scroll-body::-webkit-scrollbar-thumb:hover {
+  background: #888;
 }
