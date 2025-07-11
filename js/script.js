@@ -41,22 +41,28 @@ form.addEventListener('submit', function (e) {
 
 function renderList(items) {
     list.innerHTML = "";
+    items.sort((a, b) => new Date(a.date) - new Date(b.date));
     items.forEach(todo => {
-        const li = document.createElement('li');
-        li.className = `flex justify-between items-center ${todo.done ? 'bg-green-200' : 'bg-gray-100'} px-4 py-2 rounded-md`;
+        const tr = document.createElement('tr');
+        const statusText = todo.done ? "Sudah Selesai" : "Belum Selesai";
 
-    li.innerHTML = `
-      <span style="flex:1; ${todo.done ? 'text-decoration: line-through; opacity: 0.6;' : ''}">
-        ${todo.text} - <span class="text-sm text-gray-500">${todo.date}</span>
-      </span>
-      <div style="display: flex; gap: 5px;">
-        ${!todo.done ? `<button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>` : ""}
-        <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
-        <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
-      </div>
+        let actionButtons = "";
+        if (!todo.done) {
+            actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>`;
+            actionButtons += `<button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>`;
+        } else {
+            actionButtons += `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`;
+        }
+        actionButtons += `<button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>`;
+
+        tr.innerHTML = `
+      <td style="${todo.done ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${todo.text}</td>
+      <td>${todo.date}</td>
+      <td>${statusText}</td>
+      <td>${actionButtons}</td>
     `;
 
-        list.appendChild(li);
+        list.appendChild(tr);
     });
 }
 
@@ -109,9 +115,9 @@ const todo = {
 };
 
 function toggleDone(id) {
-  const todo = todos.find(t => t.id === id);
-  if (!todo) return;
+    const todo = todos.find(t => t.id === id);
+    if (!todo) return;
 
-  todo.done = !todo.done;
-  renderList(todos);
+    todo.done = !todo.done;
+    renderList(todos);
 }
