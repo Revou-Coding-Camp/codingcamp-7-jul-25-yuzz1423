@@ -7,11 +7,29 @@ body {
 
 .container {
   background: white;
-  padding: 40px;
-  border-radius: 12px;
-  max-width: 700px;
-  margin: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 45px;
+  border-radius: 16px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(142, 68, 173, 0.1);
+  transition: all 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark mode container */
+body.dark-mode .container {
+  background: #2a2a3d;
+  border: 1px solid rgba(155, 89, 182, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .container:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 /* JUDUL */
@@ -50,6 +68,8 @@ form input[type="date"] {
 /* FILTER */
 .filter {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .filter label {
@@ -59,14 +79,15 @@ form input[type="date"] {
 }
 
 #filter-select {
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
   border: 1px solid #ccc;
   background-color: #fff;
   color: #333;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: auto;
+  transition: border-color 0.2s ease;
 }
 
 #filter-select:hover {
@@ -77,6 +98,17 @@ form input[type="date"] {
   outline: none;
   border-color: #8e44ad;
   box-shadow: 0 0 5px rgba(142, 68, 173, 0.4);
+}
+
+/* Dark mode filter */
+body.dark-mode #filter-select {
+  background-color: #3f3556;
+  border-color: #6c568a;
+  color: #fff;
+}
+
+body.dark-mode .filter label {
+  color: #d4bfff;
 }
 
 /* WRAPPER TABEL */
@@ -172,6 +204,38 @@ td .action-buttons {
   font-weight: bold;
   padding: 4px 8px;
   border-radius: 6px;
+}
+
+/* Status Badge Styles */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.status-not-done {
+  background-color: #fff3e0;
+  color: #f39c12;
+  border: 1px solid #ffecd1;
+}
+
+.status-done {
+  background-color: #e8f5e9;
+  color: #27ae60;
+  border: 1px solid #dceede;
+}
+
+body.dark-mode .status-not-done {
+  background-color: #463827;
+  color: #f1c40f;
+  border: 1px solid #5d4c36;
+}
+
+body.dark-mode .status-done {
+  background-color: #2a3b2d;
+  color: #2ecc71;
+  border: 1px solid #3d513f;
 }
 
 /* EDIT MODE HIGHLIGHT */
@@ -327,7 +391,12 @@ body.dark-mode {
 
 body.dark-mode .container {
   background: #2a2a3d;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(155, 89, 182, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .container:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode h1 {
@@ -469,4 +538,338 @@ body.dark-mode .scroll-body::-webkit-scrollbar-thumb {
 
 body.dark-mode .scroll-body::-webkit-scrollbar-thumb:hover {
   background: #888;
+}
+
+/* Empty State Style */
+.no-tasks {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-style: italic;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px 0;
+  border: 2px dashed #dee2e6;
+}
+
+body.dark-mode .no-tasks {
+  color: #999;
+  background-color: #2d2d3f;
+  border-color: #404040;
+}
+
+.no-tasks::before {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* BUTTON ANIMATIONS */
+button {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efek hover untuk semua tombol */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Efek ripple */
+button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+button:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Submit button animation */
+#submit-btn {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(142, 68, 173, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(142, 68, 173, 0); }
+}
+
+/* Clear button animation */
+.clear-btn:hover {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Action buttons animation */
+.action-buttons button {
+  transition: all 0.2s ease;
+}
+
+.action-buttons button:hover {
+  transform: scale(1.1);
+}
+
+/* Mode toggle animation */
+.mode-toggle:hover {
+  animation: rotate 0.5s ease-in-out;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
+}
+
+/* Dark mode button animations */
+body.dark-mode button::after {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #submit-btn {
+  animation: darkPulse 2s infinite;
+}
+
+@keyframes darkPulse {
+  0% { box-shadow: 0 0 0 0 rgba(155, 89, 182, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(155, 89, 182, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(155, 89, 182, 0); }
+}
+
+body.dark-mode button:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover effect untuk mode terang */
+#todo-table-body tr {
+  transition: all 0.3s ease;
+}
+
+/* Hover effect untuk mode gelap */
+body.dark-mode #todo-table-body tr:hover td {
+  background-color: #3a304e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Transisi untuk td */
+#todo-table-body td {
+  transition: all 0.3s ease;
+}
+
+/* Animasi hover untuk baris tabel */
+@keyframes tableHover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Loading Animation */
+.loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.loading::after {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #8e44ad;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 0.6s linear infinite;
+}
+
+body.dark-mode .loading::after {
+  border-color: #9b59b6;
+  border-top-color: transparent;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Filter & Sort Transitions */
+#todo-table-body tr {
+  transition: all 0.4s ease-out;
+}
+
+.filter-transition {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.filter-transition-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Focus Styles */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.4);
+  border-color: #8e44ad;
+}
+
+body.dark-mode button:focus-visible,
+body.dark-mode input:focus-visible,
+body.dark-mode select:focus-visible {
+  box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.4);
+  border-color: #9b59b6;
+}
+
+/* Input Styling */
+input[type="text"],
+input[type="date"],
+select {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  width: 100%;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Hover state */
+input[type="text"]:hover,
+input[type="date"]:hover,
+select:hover {
+  border-color: #9b59b6;
+  box-shadow: 0 2px 8px rgba(142, 68, 173, 0.1);
+}
+
+/* Focus state */
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  outline: none;
+  border-color: #8e44ad;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Placeholder styling */
+input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Dark mode styling */
+body.dark-mode input[type="text"],
+body.dark-mode input[type="date"],
+body.dark-mode select {
+  background-color: #2d2d40;
+  border-color: #444457;
+  color: #fff;
+}
+
+body.dark-mode input[type="text"]:hover,
+body.dark-mode input[type="date"]:hover,
+body.dark-mode select:hover {
+  border-color: #9b59b6;
+  box-shadow: 0 2px 8px rgba(155, 89, 182, 0.2);
+}
+
+body.dark-mode input[type="text"]:focus,
+body.dark-mode input[type="date"]:focus,
+body.dark-mode select:focus {
+  border-color: #a569bd;
+  box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.3);
+}
+
+body.dark-mode input::placeholder {
+  color: #777;
+}
+
+/* Date input specific styling */
+input[type="date"] {
+  cursor: pointer;
+  position: relative;
+}
+
+/* Custom date input arrow */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: transparent;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Input group spacing */
+form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* Input validation styling */
+input:invalid {
+  border-color: #e74c3c;
+}
+
+input:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+/* Disabled state */
+input:disabled,
+select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+body.dark-mode input:disabled,
+body.dark-mode select:disabled {
+  background-color: #363648;
+}
+
+/* Animation for focus */
+@keyframes inputFocus {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(-1px); }
+}
+
+input:focus,
+select:focus {
+  animation: inputFocus 0.3s ease forwards;
 }

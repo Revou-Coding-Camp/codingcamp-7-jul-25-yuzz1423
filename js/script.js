@@ -6,7 +6,7 @@ const filter = document.getElementById('filter-select');
 const submitBtn = document.getElementById('submit-btn');
 const cancelBtn = document.getElementById('cancel-btn');
 const clearBtn = document.getElementById('clear-btn');
-
+const toggleBtn = document.getElementById("mode-toggle");
 
 let todos = [];
 let editingId = null;
@@ -20,7 +20,6 @@ form.addEventListener('submit', function (e) {
     if (text === "" || dateVal === "") return;
 
     if (editingId !== null) {
-        // MODE EDIT
         const index = todos.findIndex(t => t.id === editingId);
         if (index !== -1) {
             todos[index].text = text;
@@ -30,7 +29,6 @@ form.addEventListener('submit', function (e) {
         submitBtn.textContent = "Add";
         cancelBtn.style.display = "none";
     } else {
-        // MODE TAMBAH
         const todo = {
             id: Date.now(),
             text,
@@ -45,79 +43,54 @@ form.addEventListener('submit', function (e) {
     renderList(todos);
 });
 
-
 function renderList(items) {
-    list.innerHTML = "";
+  list.innerHTML = "";
+  const noTasksElement = document.getElementById('no-tasks');
 
-    const notDone = items.filter(t => !t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
-    const done = items.filter(t => t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
-    const sortedItems = [...notDone, ...done];
+  const notDone = items.filter(t => !t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
+  const done = items.filter(t => t.done).sort((a, b) => new Date(a.date) - new Date(b.date));
+  const sortedItems = [...notDone, ...done];
 
-    sortedItems.forEach(todo => {
-        const tr = document.createElement('tr');
+  if (sortedItems.length === 0) {
+    noTasksElement.style.display = 'block';
+  } else {
+    noTasksElement.style.display = 'none';
+  }
 
-        // ⬇️ tambahin highlight untuk row yg lagi diedit
-        if (todo.id === editingId) {
-            tr.classList.add("editing-row");
-        }
+  sortedItems.forEach(todo => {
+    const tr = document.createElement('tr');
 
-        // ⬇️ status pakai span + class buat style
-        const statusText = todo.done
-            ? `<span class="status-done">Sudah Selesai</span>`
-            : "Belum Selesai";
+    const statusText = todo.done
+      ? `<span class="status-done">Done</span>`
+      : "Not Done";
 
-        const actionButtons = `
-            <div class="action-buttons">
-                ${todo.done
-                    ? `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Batal</button>`
-                    : `
-                        <button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>
-                        <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
-                    `}
-                <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
-            </div>
-        `;
+    const actionButtons = `
+      <div class="action-buttons">
+        ${todo.done
+          ? `<button onclick="toggleDone(${todo.id})" class="text-yellow-500">Cancel</button>`
+          : `
+              <button onclick="toggleDone(${todo.id})" class="text-green-600">Done</button>
+              <button onclick="startEdit(${todo.id})" class="text-blue-500">Edit</button>
+            `}
+        <button onclick="deleteTodo(${todo.id})" class="text-red-500">Delete</button>
+      </div>
+    `;
 
-        tr.innerHTML = `
-            <td>${todo.text}</td>
-            <td>${todo.date}</td>
-            <td>${statusText}</td>
-            <td>${actionButtons}</td>
-        `;
+    tr.innerHTML = `
+      <td>${todo.text}</td>
+      <td>${todo.date}</td>
+      <td>${statusText}</td>
+      <td>${actionButtons}</td>
+    `;
 
-        list.appendChild(tr);
-    });
+    list.appendChild(tr);
+  });
 }
 
 function deleteTodo(id) {
     todos = todos.filter(t => t.id !== id);
     renderList(todos);
 }
-
-function editTodo(id) {
-    const todo = todos.find(t => t.id === id);
-    if (!todo) return;
-
-    const newText = prompt("Edit your task:", todo.text);
-    const newDate = prompt("Edit date (YYYY-MM-DD):", todo.date);
-
-    if (newText && newDate) {
-        todo.text = newText.trim();
-        todo.date = newDate;
-        renderList(todos);
-    }
-}
-
-filter.addEventListener('change', function () {
-    if (this.value === 'done') {
-        renderList(todos.filter(t => t.done));
-    } else if (this.value === 'not-done') {
-        renderList(todos.filter(t => !t.done));
-    } else {
-        renderList(todos);
-    }
-});
-
 
 function startEdit(id) {
     const todo = todos.find(t => t.id === id);
@@ -130,7 +103,6 @@ function startEdit(id) {
     submitBtn.textContent = "Update";
     cancelBtn.style.display = "inline";
 }
-
 
 function toggleDone(id) {
     const todo = todos.find(t => t.id === id);
@@ -156,10 +128,20 @@ clearBtn.addEventListener('click', function () {
     }
 });
 
-const toggleBtn = document.getElementById("mode-toggle");
-
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-  toggleBtn.textContent = document.body.classList.contains("dark-mode") ? "Light" : "Dark";
+filter.addEventListener('change', function () {
+    if (this.value === 'done') {
+        renderList(todos.filter(t => t.done));
+    } else if (this.value === 'not-done') {
+        renderList(todos.filter(t => !t.done));
+    } else {
+        renderList(todos);
+    }
 });
 
+toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    toggleBtn.textContent = document.body.classList.contains("dark-mode") ? "Light" : "Dark";
+});
+
+// Panggil renderList saat halaman dimuat
+renderList(todos);
