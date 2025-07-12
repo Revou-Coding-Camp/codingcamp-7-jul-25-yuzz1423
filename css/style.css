@@ -1,3 +1,64 @@
+/* Background Styling */
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(120deg, #f6d1fc 0%, #b1c9f9 100%),
+              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 4V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  padding: 40px 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Overlay pattern untuk background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
+    radial-gradient(circle at 100% 0%, rgba(255, 192, 203, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(173, 216, 230, 0.15) 0%, transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Dark Mode Background */
+body.dark-mode {
+  background: linear-gradient(120deg, #2a1b3d 0%, #1a1a2e 100%),
+              url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 4V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Dark Mode Overlay pattern */
+body.dark-mode::before {
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(155, 89, 182, 0.1) 0%, transparent 100%),
+    radial-gradient(circle at 100% 0%, rgba(142, 68, 173, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(91, 52, 132, 0.15) 0%, transparent 50%);
+}
+
+/* Animation untuk background */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body, body.dark-mode {
+  background-size: 200% 200%, 60px 60px;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+/* Responsive Background */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 20px 10px;
+    background-size: 150% 150%, 30px 30px;
+  }
+}
+
 /* FONT */
 body {
   font-family: 'Poppins', sans-serif;
@@ -842,7 +903,7 @@ form {
 
 /* Input validation styling */
 input:invalid {
-  border-color: #e74c3c;
+  border-color: #9b59b6;
 }
 
 input:invalid:focus {
@@ -872,4 +933,145 @@ body.dark-mode select:disabled {
 input:focus,
 select:focus {
   animation: inputFocus 0.3s ease forwards;
+}
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+  /* Container */
+  .container {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 12px;
+  }
+
+  /* Judul */
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  /* Form */
+  form {
+    gap: 8px;
+  }
+
+  form input[type="text"],
+  form input[type="date"] {
+    flex: 1 1 100%;
+    padding: 10px;
+  }
+
+  /* Filter */
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  #filter-select {
+    width: 100%;
+  }
+
+  /* Table */
+  .table-wrapper {
+    margin: 15px 0;
+  }
+
+  #todo-table th,
+  #todo-table-body td {
+    padding: 8px 5px;
+    font-size: 0.85rem;
+  }
+
+  /* Kolom tabel */
+  #todo-table th:nth-child(1),
+  #todo-table-body td:nth-child(1) {
+    width: 35%;
+  }
+
+  #todo-table th:nth-child(2),
+  #todo-table-body td:nth-child(2) {
+    width: 25%;
+  }
+
+  #todo-table th:nth-child(3),
+  #todo-table-body td:nth-child(3) {
+    width: 20%;
+  }
+
+  #todo-table th:nth-child(4),
+  #todo-table-body td:nth-child(4) {
+    width: 20%;
+  }
+
+  /* Action Buttons */
+  td .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .action-buttons button {
+    padding: 4px 8px;
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  /* Clear & Submit Buttons */
+  .clear-btn,
+  #submit-btn,
+  #cancel-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
+
+  /* Dark Mode Toggle */
+  .mode-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  /* Scrollbar */
+  .scroll-body {
+    max-height: 300px;
+  }
+}
+
+/* Untuk layar sangat kecil */
+@media screen and (max-width: 375px) {
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  #todo-table th,
+  #todo-table_body td {
+    font-size: 0.75rem;
+    padding: 6px 3px;
+  }
+
+  .action-buttons button {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+  }
+
+  .status-badge {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+  }
 }
